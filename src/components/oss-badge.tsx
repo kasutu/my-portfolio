@@ -92,10 +92,6 @@ const OSSCard = ({
 
   return (
     <div ref={wrapRef} className="relative inline-block" style={{ perspective: "1400px" }}>
-      <div
-        aria-hidden
-        className="absolute left-1/2 top-full h-12 w-[75%] -translate-x-1/2 rounded-[100%] bg-amber-200/5 blur-2xl"
-      />
 
       <div
         ref={cardRef}
@@ -180,7 +176,7 @@ const OSSCard = ({
               {repo}
             </p>
             <a
-              href={url}
+              href={prUrl}
               target="_blank"
               rel="noreferrer"
               onClick={(e) => e.stopPropagation()}
