@@ -67,17 +67,23 @@ const OSSCard = ({
     const gy = gsap.quickTo(glare, "y", { duration: 0.4, ease: "power3.out" });
 
     gsap.set(card, { transformPerspective: 1200, transformOrigin: "center" });
+    gsap.set(glare, { xPercent: -50, yPercent: -50 });
 
     const onMove = (e: MouseEvent) => {
       const r = wrap.getBoundingClientRect();
+      const cr = card.getBoundingClientRect(); // ← use card dimensions for glare
+
       const px = (e.clientX - r.left) / r.width;
       const py = (e.clientY - r.top) / r.height;
+
       qx((px - 0.5) * 18);
       qy(-(py - 0.5) * 18);
       qz(1.03);
-      gx((px - 0.5) * r.width);
-      gy((py - 0.5) * r.height);
+
+      gx((e.clientX - cr.left) - cr.width / 2);  // ← pixel offset from card center
+      gy((e.clientY - cr.top) - cr.height / 2);
     };
+
     const onLeave = () => { qx(0); qy(0); qz(1); gx(0); gy(0); };
 
     wrap.addEventListener("mousemove", onMove);
@@ -91,8 +97,11 @@ const OSSCard = ({
   const handleCardClick = () => window.open(url, "_blank", "noreferrer");
 
   return (
-    <div ref={wrapRef} className="relative inline-block" style={{ perspective: "1400px" }}>
-
+    <div
+      ref={wrapRef}
+      className="relative w-fit h-fit"
+      style={{ perspective: "1400px" }}
+    >
       <div
         ref={cardRef}
         role="link"
@@ -135,7 +144,7 @@ const OSSCard = ({
         <div
           ref={glareRef}
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[160%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-35"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[160%] w-[160%] rounded-full opacity-35"
           style={{
             background: "radial-gradient(circle, rgba(255,235,170,0.2) 0%, transparent 45%)",
             mixBlendMode: "screen",
