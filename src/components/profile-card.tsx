@@ -42,7 +42,7 @@ const ProfileCard = ({
   const hasMultipleBadges = badge && badge.length > 1;
 
   return (
-    <div className="w-full max-w-5xl p-4 bg-background rounded-[32px] border-2 border-border inline-flex justify-start items-center overflow-hidden shadow-sm">
+    <div className="w-full max-w-5xl p-4 bg-background rounded-[32px] border inline-flex justify-start items-center overflow-hidden">
       <div className="flex-1 flex justify-start items-start gap-4">
         <Image
           width={160}
