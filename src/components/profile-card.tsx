@@ -29,6 +29,22 @@ export interface ProfileCardProps {
   modeToggle: React.ReactNode;
 }
 
+// Name
+{/* <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight truncate">
+  {name}
+</h2> */}
+
+// Location
+{/* <p className="text-sm text-muted-foreground flex items-center gap-1">
+  <MapPin className="size-4 shrink-0" />
+  {location}
+</p> */}
+
+// Badge dropdown label
+{/* <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+  Other Achievements
+</DropdownMenuLabel> */}
+
 const ProfileCard = ({
   avatar,
   name,
@@ -57,7 +73,7 @@ const ProfileCard = ({
 
             <div className="self-stretch flex justify-between items-center gap-2 w-full">
               <div className="flex justify-start items-center gap-2 min-w-0">
-                <h2 className="text-foreground text-2xl font-medium truncate">
+                <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight truncate">
                   {name}
                 </h2>
                 {verified && (
@@ -78,7 +94,7 @@ const ProfileCard = ({
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
+                      <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
                         Other Achievements
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
@@ -105,12 +121,15 @@ const ProfileCard = ({
 
             <div className="flex justify-start items-center gap-1">
               <MapPin className="size-4 text-zinc-500 shrink-0" />
-              <span className="text-secondary-foreground text-sm">{location}</span>
+              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                <MapPin className="size-4 shrink-0" />
+                {location}
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-2 py-1">
               {tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="rounded-full text-xs font-semibold">
+                <Badge key={tag} variant="secondary" className="rounded-full">
                   {tag}
                 </Badge>
               ))}

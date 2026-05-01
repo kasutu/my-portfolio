@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Nunito, Nunito_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/global/theme-provider";
 
-const nunito = Nunito({
+const geist = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const nunitoSans = Nunito_Sans({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-nunito-sans",
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -27,8 +27,8 @@ export default function RootLayout({
       lang="en"
       className={cn(
         "h-full antialiased",
-        nunito.variable,
-        nunitoSans.variable,
+        geist.variable,
+        geistMono.variable,
         "font-sans"
       )}
       suppressHydrationWarning
