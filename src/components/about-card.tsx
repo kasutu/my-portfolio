@@ -6,7 +6,7 @@ export function AboutCard({ content }: { content: string }) {
       <h3 className="scroll-m-20 text-lg font-semibold tracking-tight">About</h3>
       <div className="flex flex-col">
         {paragraphs.map((para, i) => (
-          <p key={i} className="leading-7 not-first:mt-4 text-sm text-muted-foreground">
+          <p key={i} className="leading-7 not-first:mt-4 text-base text-card-foreground">
             {para}
           </p>
         ))}

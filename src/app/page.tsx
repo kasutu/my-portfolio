@@ -13,7 +13,7 @@ export default function Home() {
   I'm a full-Stack Software Engineer specializing in building solutions with JavaScript, Java, and Dart. I work on projects involving real-time systems, modern web and native desktop applications, android mobile applications, and digital marketing and out of home advertising. 
   
 
-  
+
   I've helped businesses and startups streamline their operations through software. 
 
   Lately, I've been in the dojo training Artificial Intelligence, focusing on training and integrating AI models into modern software. My work now includes real-time video systems and AI powered solutions optimizing processes and deliver cutting edge solutions.
@@ -68,7 +68,7 @@ export default function Home() {
 
       {/* About */}
       <section className="flex gap-4">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-full">
           <AboutCard content={about} />
           <TechStackCard data={techStack} />
         </div>
