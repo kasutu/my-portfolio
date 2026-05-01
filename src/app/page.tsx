@@ -7,6 +7,7 @@ import OSSBadge from "@/components/oss-badge";
 import { Badge } from "@/components/ui/badge";
 import { TechStackCard } from "@/components/tech-stack-card";
 import { AboutCard } from "@/components/about-card";
+import Timeline, { TimelineEntry } from "@/components/timeline";
 
 export default function Home() {
   const about = `
@@ -35,6 +36,49 @@ export default function Home() {
     {
       category: "DevOps & Infrastructure",
       values: ["Docker", "Docker Compose", "GitHub Actions", "Netlify", "Vercel", "Railway", "Render"],
+    },
+  ];
+
+  const timeline: TimelineEntry[] = [
+    {
+      title: "GTA S.A. Mods, Batch Scripts",
+      description: "Barotac Nuevo, Philippines",
+      year: "2012",
+    },
+    {
+      title: "Hacking, Rooting, & Networking",
+      description: "Barotac Nuevo, Philippines",
+      year: "2017",
+    },
+    {
+      title: "Photo and Video Editing",
+      description: "Barotac Nuevo, Philippines",
+      year: "2018",
+    },
+    {
+      title: "Sports Sticker Business",
+      description: "Negative Space, Barotac Nuevo, Philippines",
+      year: "2020",
+    },
+    {
+      title: "Founder & Owner",
+      description: "Splitscale, Iloilo, Philippines",
+      year: "2022",
+    },
+    {
+      title: "Software Engineer",
+      description: "UniHub, Iloilo, Philippines",
+      year: "2022",
+    },
+    {
+      title: "Project Associate Software Engineer",
+      description: "Prometheus, Iloilo, Philippines",
+      year: "2023",
+    },
+    {
+      title: "Co-founder & CTO",
+      description: "Localize, Iloilo, Philippines",
+      year: "2024",
     },
   ];
 
@@ -72,7 +116,10 @@ export default function Home() {
           <AboutCard content={about} />
           <TechStackCard data={techStack} />
         </div>
-        <OSSBadge />
+        <div className="flex flex-col gap-4 w-fit">
+          <OSSBadge />
+          <Timeline timeline={timeline} />
+        </div>
       </section>
     </MaxWidthWrapper>
   );
