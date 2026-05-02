@@ -1,0 +1,1202 @@
+# Project Directory Structure:
+.
+├── public/
+│   ├── avatar.png
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src/
+│   ├── app/
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── global/
+│   │   │   ├── max-width-wrapper.tsx
+│   │   │   └── theme-provider.tsx
+│   │   ├── ui/
+│   │   │   ├── accordion.tsx
+│   │   │   ├── badge.tsx
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── carousel.tsx
+│   │   │   ├── dropdown-menu.tsx
+│   │   │   ├── item.tsx
+│   │   │   ├── navigation-menu.tsx
+│   │   │   ├── separator.tsx
+│   │   │   ├── switch.tsx
+│   │   │   └── timeline.tsx
+│   │   ├── about-card.tsx
+│   │   ├── certificates.tsx
+│   │   ├── footer.tsx
+│   │   ├── mode-toggle.tsx
+│   │   ├── nav-bar.tsx
+│   │   ├── oss-badge.tsx
+│   │   ├── profile-card.tsx
+│   │   ├── recent-projects-card.tsx
+│   │   ├── tech-stack-card.tsx
+│   │   ├── testimonial.tsx
+│   │   └── timeline.tsx
+│   └── lib/
+│       ├── types.ts
+│       └── utils.ts
+├── README.md
+├── bun.lock
+├── components.json
+├── next.config.ts
+├── package.json
+├── postcss.config.mjs
+├── tailwind.config.ts
+└── tsconfig.json
+
+# BEGIN FILE CONTENTS
+
+# File: src/components/global/max-width-wrapper.tsx
+
+import { cn } from '@/lib/utils';
+import React from 'react';
+
+interface Props {
+  className?: string;
+  children: React.ReactNode;
+}
+
+const MaxWidthWrapper = ({ className, children }: Props) => {
+  return (
+    <section
+      className={cn(
+        "w-full mx-auto px-4 sm:px-6 md:max-w-4xl",
+        className,
+      )}
+    >
+      {children}
+    </section>
+  );
+};
+
+export default MaxWidthWrapper;
+
+# File: src/components/global/theme-provider.tsx
+
+"use client";
+
+import * as React from "react";
+
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+export function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+}
+
+# File: src/components/about-card.tsx
+
+export function AboutCard({ content }: { content: string }) {
+  const paragraphs = content.split(/\n\n+/).filter(Boolean);
+
+  return (
+    <div className="w-full p-4 bg-background rounded-[32px] border flex flex-col gap-2 overflow-hidden">
+      <h3 className="scroll-m-20 text-lg font-semibold tracking-tight">About</h3>
+      <div className="flex flex-col">
+        {paragraphs.map((para, i) => (
+          <p key={i} className="leading-7 not-first:mt-4 text-base text-card-foreground">
+            {para}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+# File: src/components/certificates.tsx
+
+import { Item, ItemContent, ItemTitle } from "@/components/ui/item";
+
+interface Certification {
+  title: string;
+  url: string;
+}
+
+export function Certificates({ certifications }: { certifications: Certification[] }) {
+  return <div className="w-full p-4 bg-background rounded-[32px] border flex flex-col gap-4 h-fit">
+    <h3 className="scroll-m-20 text-lg font-semibold tracking-tight shrink-0">Certifications</h3>
+    <div className="flex flex-col gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      {certifications.map(({ title, url }) => (
+        <Item key={title} variant="outline" asChild>
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <ItemContent>
+              <ItemTitle>{title}</ItemTitle>
+            </ItemContent>
+          </a>
+        </Item>
+      ))}
+    </div>
+  </div>
+}
+
+# File: src/components/footer.tsx
+
+import * as React from "react";
+
+export interface FooterLink {
+  name: string;
+  href: string;
+}
+
+export interface SocialLink {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}
+
+export interface LogoConfig {
+  src: string;
+  alt?: string;
+  name: string;
+  href?: string;
+}
+
+export interface FooterProps {
+  logo: LogoConfig;
+  links: FooterLink[];
+  socials: SocialLink[];
+  copyright: string;
+}
+
+const Footer = ({ logo, links, socials, copyright }: FooterProps) => {
+  const logoHref = logo.href ?? "/";
+
+  return (
+    <footer className="mx-auto max-w-7xl">
+      <div className="flex w-full flex-col items-center justify-center space-y-5 px-4 py-12 text-center">
+        <a href={logoHref} className="hover:opacity-80 transition-opacity">
+          <img src={logo.src} alt={logo.alt ?? logo.name} className="h-8 w-8" />
+        </a>
+
+        <nav className="flex flex-col flex-wrap items-center space-y-4 text-xs font-medium text-muted-foreground sm:flex-row sm:space-x-4 sm:space-y-0">
+          {links.map((link) => (
+            <a key={link.href} href={link.href} className="hover:text-foreground">
+              {link.name}
+            </a>
+          ))}
+        </nav>
+
+        <nav className="flex items-center gap-4 text-muted-foreground">
+          {socials.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              aria-label={social.label}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="hover:text-foreground transition-colors"
+            >
+              {social.icon}
+            </a>
+          ))}
+        </nav>
+
+        <p className="text-xs text-muted-foreground">{copyright}</p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+# File: src/components/mode-toggle.tsx
+
+'use client'
+
+import { Moon, Sun } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
+import { useTheme } from 'next-themes'
+import { useState, useEffect } from 'react';
+
+export function ModeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  const isDark = theme === "dark";
+
+  return (
+    <div>
+      <div className='relative inline-grid h-7 grid-cols-[1fr_1fr] items-center text-sm font-medium'>
+        <Switch
+          checked={isDark}
+          onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+          className='peer data-[state=unchecked]:bg-input/50 absolute inset-0 data-[size=default]:h-[inherit] data-[size=default]:w-14 [&_span]:z-10 [&_span]:transition-transform [&_span]:duration-300 [&_span]:ease-[cubic-bezier(0.16,1,0.3,1)] [&_span]:group-data-[size=default]/switch:size-6.5 [&_span]:data-[state=checked]:translate-x-7 [&_span]:data-[state=checked]:rtl:-translate-x-7'
+          aria-label='Switch with permanent icon indicators'
+        />
+        <span className='pointer-events-none relative ml-0.5 flex min-w-8 items-center justify-center text-center transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] peer-data-[state=checked]:invisible peer-data-[state=unchecked]:translate-x-6 peer-data-[state=unchecked]:rtl:-translate-x-6'>
+          <Sun className='size-4' aria-hidden='true' />
+        </span>
+        <span className='peer-data-[state=checked]:text-background pointer-events-none relative flex min-w-8 items-center justify-center text-center transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] peer-data-[state=checked]:-translate-x-full peer-data-[state=unchecked]:invisible peer-data-[state=checked]:rtl:translate-x-full'>
+          <Moon className='size-4' aria-hidden='true' />
+        </span>
+      </div>
+    </div>
+  )
+}
+
+
+
+# File: src/components/nav-bar.tsx
+
+"use client";
+
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+import * as React from "react";
+
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export interface LogoConfig {
+  src: string;
+  alt?: string;
+  name: string;
+  href?: string;
+}
+
+export interface NavBarProps {
+  logo: LogoConfig;
+  links: NavLink[];
+  modeToggle: React.ReactNode;
+  desktopActions: React.ReactNode;
+  mobileMenuActions: React.ReactNode;
+}
+
+const NavBar = ({
+  logo,
+  links,
+  modeToggle,
+  desktopActions,
+  mobileMenuActions,
+}: NavBarProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const logoHref = logo.href ?? "/";
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  return (
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 flex justify-center border-b border-border">
+      <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4">
+        <div className="flex items-center">
+          <a
+            href={logoHref}
+            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+          >
+            <img src={logo.src} alt={logo.alt ?? logo.name} className="h-8 w-8" />
+            <span className="text-lg font-bold tracking-tight font-glancyr">
+              {logo.name}
+            </span>
+          </a>
+        </div>
+
+        <NavigationMenu className="hidden lg:flex w-full justify-center items-center">
+          <NavigationMenuList>
+            {links.map((link) => (
+              <NavigationMenuItem key={link.href}>
+                <Button variant="ghost" asChild>
+                  <a href={link.href}>{link.label}</a>
+                </Button>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+
+        <div className="hidden lg:flex items-center space-x-3">
+          {modeToggle}
+          {desktopActions}
+        </div>
+
+        <div className="flex items-center space-x-2 lg:hidden">
+          {modeToggle}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </Button>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div className="fixed inset-x-0 top-16 z-40 lg:hidden bg-background border-t border-border">
+          <div className="h-[calc(100dvh-4rem)] flex flex-col">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-6 pb-[env(safe-area-inset-bottom)]">
+              <div className="space-y-2">
+                {links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="block py-4 text-base font-medium hover:text-primary transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="px-4 py-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] border-t border-border/30 bg-background">
+              {mobileMenuActions}
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export const ListItem = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentPropsWithoutRef<"a"> & { title: string }
+>(({ className, title, children, ...props }, ref) => (
+  <li>
+    <NavigationMenuLink asChild>
+      <a
+        ref={ref}
+        className={cn(
+          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          className
+        )}
+        {...props}
+      >
+        <div className="text-sm font-medium leading-none">{title}</div>
+        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          {children}
+        </p>
+      </a>
+    </NavigationMenuLink>
+  </li>
+));
+ListItem.displayName = "ListItem";
+
+export default NavBar;
+
+
+# File: src/components/oss-badge.tsx
+
+"use client";
+
+import { GitMerge, GitPullRequest } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { cn } from "@/lib/utils";
+
+export interface OSSCardProps {
+  repo?: string;
+  prNumber?: number;
+  highlight?: string;
+  description?: string;
+  contributor?: string;
+  mergedOn?: string;
+  additions?: number;
+  deletions?: number;
+  url?: string;
+  prUrl?: string;
+  className?: string;
+}
+
+const OSSMark = ({ className = "" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={1.75}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden
+  >
+    <path d="M12 2.2 21 7v10l-9 4.8L3 17V7z" />
+    <path d="M8 10.5v3a2.5 2.5 0 0 0 2.5 2.5H14" />
+    <circle cx="8" cy="8" r="1.6" />
+    <circle cx="15.5" cy="16" r="1.6" />
+  </svg>
+);
+
+const OSSCard = ({
+  repo = "lucide-icons",
+  prNumber = 2231,
+  highlight = "philippine-peso",
+  description = "Contributor Pass",
+  contributor = "@kasutu",
+  mergedOn = "06 · 2024",
+  additions = 32,
+  deletions = 0,
+  url = "https://oss-badge.lovable.app",
+  prUrl = "https://github.com/lucide-icons/lucide/pull/2231",
+  className,
+}: OSSCardProps) => {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const card = cardRef.current;
+    const glare = glareRef.current;
+    if (!wrap || !card || !glare) return;
+
+    const qx = gsap.quickTo(card, "rotationY", { duration: 0.6, ease: "power3.out" });
+    const qy = gsap.quickTo(card, "rotationX", { duration: 0.6, ease: "power3.out" });
+    const qz = gsap.quickTo(card, "scale", { duration: 0.6, ease: "power3.out" });
+    const gx = gsap.quickTo(glare, "x", { duration: 0.4, ease: "power3.out" });
+    const gy = gsap.quickTo(glare, "y", { duration: 0.4, ease: "power3.out" });
+
+    gsap.set(card, { transformPerspective: 1200, transformOrigin: "center" });
+    gsap.set(glare, { xPercent: -50, yPercent: -50 });
+
+    const onMove = (e: MouseEvent) => {
+      const r = wrap.getBoundingClientRect();
+      const cr = card.getBoundingClientRect(); // ← use card dimensions for glare
+
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+
+      qx((px - 0.5) * 18);
+      qy(-(py - 0.5) * 18);
+      qz(1.03);
+
+      gx((e.clientX - cr.left) - cr.width / 2);  // ← pixel offset from card center
+      gy((e.clientY - cr.top) - cr.height / 2);
+    };
+
+    const onLeave = () => { qx(0); qy(0); qz(1); gx(0); gy(0); };
+
+    wrap.addEventListener("mousemove", onMove);
+    wrap.addEventListener("mouseleave", onLeave);
+    return () => {
+      wrap.removeEventListener("mousemove", onMove);
+      wrap.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
+  const handleCardClick = () => window.open(url, "_blank", "noreferrer");
+
+  return (
+    <div
+      ref={wrapRef}
+      className={cn("relative w-[260px] aspect-260/346", className)}
+      style={{ perspective: "1400px" }}
+    >
+      <div
+        ref={cardRef}
+        role="link"
+        tabIndex={0}
+        onClick={handleCardClick}
+        onKeyDown={(e) => e.key === "Enter" && handleCardClick()}
+        className="relative w-full h-full cursor-pointer overflow-hidden rounded-2xl focus:outline-none"
+        style={{
+          boxShadow: "...",
+        }}
+      >
+        {/* PVC layers */}
+        <div className="absolute inset-0 pvc-base" />
+        <div className="absolute inset-0 pvc-grain opacity-90" />
+        <div className="absolute inset-0 pvc-noise opacity-60" />
+
+        {/* Gold ambients */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full opacity-[0.14]"
+          style={{
+            background: "radial-gradient(circle, rgba(212,175,55,0.8) 0%, transparent 70%)",
+            filter: "blur(18px)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-12 bottom-0 h-40 w-40 rounded-full opacity-[0.08]"
+          style={{
+            background: "radial-gradient(circle, rgba(245,215,120,0.7) 0%, transparent 70%)",
+            filter: "blur(22px)",
+          }}
+        />
+
+        {/* Mouse-tracked glare */}
+        <div
+          ref={glareRef}
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[160%] w-[160%] rounded-full opacity-35"
+          style={{
+            background: "radial-gradient(circle, rgba(255,235,170,0.2) 0%, transparent 45%)",
+            mixBlendMode: "screen",
+          }}
+        />
+
+        {/* Gold edge */}
+        <div
+          className="pointer-events-none absolute inset-0 rounded-2xl"
+          style={{
+            boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.2), inset 0 1px 0 rgba(255,225,150,0.2)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-px"
+          style={{
+            background: "linear-gradient(90deg, transparent, rgba(255,225,150,0.7), transparent)",
+          }}
+        />
+
+        {/* CONTENT */}
+        <div className="relative flex h-full flex-col p-6">
+
+          {/* TOP: brand */}
+          <div className="flex items-center gap-2">
+            <OSSMark className="h-8 w-8 text-amber-200/85" />
+            <span className="text-[9px] font-medium uppercase tracking-[0.32em] text-amber-100/50">
+              OSS Badge
+            </span>
+          </div>
+
+          {/* BODY */}
+          <div className="mt-8 flex flex-col items-start text-left">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-amber-300/70">
+              {description}
+            </p>
+            <p className="mt-4 text-[9px] font-medium uppercase tracking-[0.3em] text-amber-100/40">
+              {repo}
+            </p>
+            <a
+              href={prUrl}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="mt-2 font-mono text-lg font-semibold tracking-wide gold-text hover:opacity-80 transition-opacity"
+            >
+              {highlight}
+            </a>
+            <div className="mt-2.5 flex items-center gap-2 text-[10px] text-amber-100/50">
+              <span className="flex items-center gap-1">
+                <GitPullRequest className="h-3 w-3" /> #{prNumber}
+              </span>
+              <span className="text-amber-100/25">·</span>
+              <span className="text-emerald-300/75">+{additions}</span>
+              <span className="text-rose-300/65">-{deletions}</span>
+            </div>
+          </div>
+
+          <div className="flex-1" />
+
+          <div
+            className="my-4 h-px w-full"
+            style={{
+              background: "linear-gradient(90deg, transparent, rgba(212,175,55,0.35), transparent)",
+            }}
+          />
+
+          {/* FOOTER */}
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-[8px] font-medium uppercase tracking-[0.3em] text-amber-100/40">
+                Contributor
+              </p>
+              <p className="mt-1 font-mono text-[12px] tracking-wider gold-text">
+                {contributor}
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 rounded-full border border-amber-300/25 bg-amber-300/5 px-2 py-0.5">
+              <GitMerge className="h-3 w-3 text-amber-300" />
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-amber-200/90">
+                merged
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OSSCard;
+
+# File: src/components/profile-card.tsx
+
+"use client";
+
+import * as React from "react";
+import { MapPin, BadgeCheck, ChevronDown, Trophy } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+
+export interface BadgeLink {
+  title: string;
+  href: string;
+}
+
+export interface ProfileCardProps {
+  avatar: string;
+  name: string;
+  verified?: boolean;
+  location: string;
+  tags: string[];
+  badge?: BadgeLink[];
+  actions: React.ReactNode;
+  modeToggle: React.ReactNode;
+}
+
+// Name
+{/* <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight truncate">
+  {name}
+</h2> */}
+
+// Location
+{/* <p className="text-sm text-muted-foreground flex items-center gap-1">
+  <MapPin className="size-4 shrink-0" />
+  {location}
+</p> */}
+
+// Badge dropdown label
+{/* <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+  Other Achievements
+</DropdownMenuLabel> */}
+
+const ProfileCard = ({
+  avatar,
+  name,
+  verified = false,
+  location,
+  tags,
+  badge,
+  actions,
+  modeToggle,
+}: ProfileCardProps) => {
+  const hasMultipleBadges = badge && badge.length > 1;
+
+  return (
+    <div className="w-full max-w-5xl p-4 bg-background rounded-[32px] border inline-flex justify-start items-center overflow-hidden">
+      <div className="flex-1 flex justify-start items-start gap-4">
+        <Image
+          loading="eager"
+          width={160}
+          height={160}
+          src={avatar}
+          alt={name}
+          className="size-40 rounded-2xl object-cover shrink-0"
+        />
+
+        <div className="flex-1 self-stretch flex flex-col justify-between items-start min-w-0">
+          <div className="self-stretch flex flex-col justify-start items-start gap-2 w-full">
+
+            <div className="self-stretch flex justify-between items-center gap-2 w-full">
+              <div className="flex justify-start items-center gap-2 min-w-0">
+                <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight truncate">
+                  {name}
+                </h2>
+                {verified && (
+                  <BadgeCheck className="size-5 text-sky-500 shrink-0" />
+                )}
+              </div>
+
+              {badge?.length && (
+                hasMultipleBadges ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="min-h-9 px-4 py-1 bg-linear-to-r from-sky-400 to-sky-500 rounded-2xl border border-sky-300 inline-flex justify-start items-center gap-2 shrink-0 cursor-pointer hover:opacity-90 transition-opacity focus:outline-none">
+                        <Trophy className="size-4 text-sky-50" />
+                        <span className="text-sky-50 text-sm font-medium leading-5 whitespace-nowrap">
+                          {badge[0].title}
+                        </span>
+                        <ChevronDown className="size-4 text-sky-50" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+                        Other Achievements
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {badge.slice(1).map((item) => (
+                        <DropdownMenuItem key={item.title} asChild>
+                          <a href={item.href}>{item.title}</a>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <a
+                    href={badge[0].href}
+                    className="min-h-9 px-4 py-1 bg-linear-to-r from-sky-400 to-sky-500 rounded-2xl border border-sky-300 inline-flex justify-start items-center gap-2 shrink-0 hover:opacity-90 transition-opacity"
+                  >
+                    <Trophy className="size-4 text-sky-50" />
+                    <span className="text-sky-50 text-sm font-medium leading-5 whitespace-nowrap">
+                      {badge[0].title}
+                    </span>
+                  </a>
+                )
+              )}
+            </div>
+
+            <div className="flex justify-start items-center gap-1">
+              <MapPin className="size-4 text-zinc-500 shrink-0" />
+              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                <MapPin className="size-4 shrink-0" />
+                {location}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2 py-1">
+              {tags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="rounded-full">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
+          <div className="self-stretch flex justify-between items-center mt-2">
+            <div className="flex justify-start items-center gap-2">
+              {actions}
+            </div>
+            {modeToggle}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileCard;
+
+# File: src/components/recent-projects-card.tsx
+
+import {
+  Item,
+  ItemContent,
+  ItemTitle,
+  ItemDescription,
+  ItemFooter,
+} from "@/components/ui/item";
+
+interface Project {
+  title: string;
+  description: string;
+  url: string;
+}
+
+export function RecentProjectsCard({ data }: { data: Project[] }) {
+  return (
+    <div className="w-full p-4 bg-background rounded-[32px] border flex flex-col justify-start items-start gap-4 overflow-hidden">
+      <h3 className="scroll-m-20 text-lg font-semibold tracking-tight">Recent Projects</h3>
+      <div className="grid grid-cols-2 gap-2 w-full">
+        {data.map(({ title, description, url }) => (
+          <Item key={title} variant="outline" asChild>
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              <ItemContent>
+                <ItemTitle>{title}</ItemTitle>
+                <ItemDescription className="line-clamp-2">{description}</ItemDescription>
+              </ItemContent>
+              <ItemFooter>
+                <code className="select-none pointer-events-none block min-w-0 rounded-md border bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                  {new URL(url).hostname.replace("www.", "")}
+                </code>
+              </ItemFooter>
+            </a>
+          </Item>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+# File: src/components/tech-stack-card.tsx
+
+import { Badge } from "@/components/ui/badge";
+
+interface TechStackCategory {
+  category: string;
+  values: string[];
+}
+interface TechStackCardProps {
+  data: TechStackCategory[];
+}
+
+export function TechStackCard({ data }: TechStackCardProps) {
+  return (
+    <div className="w-full p-4 bg-background rounded-[32px] border flex flex-col justify-start items-start gap-4 overflow-hidden">
+      <h3 className="scroll-m-20 text-lg font-semibold tracking-tight">Tech Stack</h3>
+      <div className="flex flex-col gap-4">
+        {data.map(({ category, values }) => (
+          <div key={category} className="flex flex-col gap-2">
+            <small className="text-sm font-medium leading-none text-foreground">
+              {category}
+            </small>
+            <div className="flex flex-wrap gap-2 py-1">
+              {values.map((tag) => (
+                <Badge key={tag} variant="secondary" className="rounded-full">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+# File: src/components/testimonial.tsx
+
+"use client"
+
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Item, ItemContent, ItemTitle, ItemDescription } from "@/components/ui/item"
+
+export type TestimonialItem = {
+  name: string
+  role: string
+  company: string
+  content: string
+}
+
+type TestimonialsProps = {
+  testimonials: TestimonialItem[]
+}
+
+export function Testimonials({ testimonials }: TestimonialsProps) {
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % testimonials.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [testimonials.length])
+
+  const t = testimonials[current]
+
+  return (
+    <Card className="w-full rounded-[32px]">
+      <CardHeader>
+        <CardTitle>Recommendations</CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="flex flex-col gap-3"
+          >
+            <p className="text-sm text-muted-foreground leading-6 line-clamp-4">
+              &ldquo;{t.content}&rdquo;
+            </p>
+            <Item className="p-0">
+              <ItemContent>
+                <ItemTitle>{t.name}</ItemTitle>
+                <ItemDescription>
+                  {t.role} at <span className="text-foreground font-semibold">{t.company}</span>
+                </ItemDescription>
+              </ItemContent>
+            </Item>
+          </motion.div>
+        </AnimatePresence>
+      </CardContent>
+      <CardFooter className="pt-0">
+        <div className="flex gap-1 items-center">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-4 bg-foreground" : "w-1.5 bg-muted-foreground/30"
+                }`}
+            />
+          ))}
+        </div>
+      </CardFooter>
+    </Card>
+  )
+}
+
+# File: src/components/timeline.tsx
+
+import { cn } from "@/lib/utils"
+import {
+  Timeline,
+  TimelineContent,
+  TimelineDate,
+  TimelineHeader,
+  TimelineIndicator,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineTitle,
+} from "@/components/ui/timeline"
+
+export interface TimelineEntry {
+  title: string;
+  description: string;
+  year: string;
+}
+
+export default function ExperienceTimeline({ timeline, className }: { timeline: TimelineEntry[], className?: string }) {
+  const reversed = [...timeline].reverse()
+
+  return (
+    <div className={cn("w-full p-4 bg-background rounded-[32px] border flex flex-col gap-4 overflow-hidden", className)}>
+      <h3 className="scroll-m-20 text-lg font-semibold tracking-tight shrink-0">Experience</h3>
+      <div className="overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <Timeline defaultValue={1} className="w-full">
+          {reversed.map(({ title, description, year }, index) => (
+            <TimelineItem key={index} step={index + 1}>
+              <TimelineHeader>
+                <TimelineDate>{year}</TimelineDate>
+                <TimelineTitle className="line-clamp-2">{title}</TimelineTitle>
+              </TimelineHeader>
+              <TimelineIndicator />
+              {index < reversed.length - 1 && <TimelineSeparator />}
+              <TimelineContent>{description}</TimelineContent>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      </div>
+    </div>
+  )
+}
+
+# File: src/app/page.tsx
+
+import MaxWidthWrapper from "@/components/global/max-width-wrapper";
+import ProfileCard from "@/components/profile-card";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
+import { CalendarDays, Mail } from "lucide-react";
+import OSSBadge from "@/components/oss-badge";
+import { TechStackCard } from "@/components/tech-stack-card";
+import { AboutCard } from "@/components/about-card";
+import { TimelineEntry } from "@/components/timeline";
+import { RecentProjectsCard } from "@/components/recent-projects-card";
+import { Certificates } from "@/components/certificates";
+import { TestimonialItem, Testimonials } from "@/components/testimonial";
+import ExperienceTimeline from "@/components/timeline";
+
+export default function Home() {
+  const about = `
+  I'm a full-Stack Software Engineer specializing in building solutions with JavaScript, Java, and Dart. I work on projects involving real-time systems, modern web and native desktop applications, android mobile applications, and digital marketing and out of home advertising. 
+  
+
+
+  I've helped businesses and startups streamline their operations through software. 
+
+  Lately, I've been in the dojo training Artificial Intelligence, focusing on training and integrating AI models into modern software. My work now includes real-time video systems and AI powered solutions optimizing processes and deliver cutting edge solutions.
+  `;
+
+  const techStack = [
+    {
+      category: "Languages",
+      values: ["Typescript", "Javascript", "Java", "Dart", "C#", "Shell", "Python"],
+    },
+    {
+      category: "Frontend",
+      values: ["Next.js", "React", "Solid.js", "Vite", "Flutter", "Astro", "TailwindCSS", "shadcn/ui", "Bootstrap"],
+    },
+    {
+      category: "Backend & Runtime",
+      values: ["Node.js", "NestJs", "Bun", "Springboot"],
+    },
+    {
+      category: "DevOps & Infrastructure",
+      values: ["Docker", "Docker Compose", "GitHub Actions", "Netlify", "Vercel", "Railway", "Render"],
+    },
+  ];
+
+  const timeline: TimelineEntry[] = [
+    {
+      title: "GTA S.A. Mods, Batch Scripts",
+      description: "Barotac Nuevo, Philippines",
+      year: "2012",
+    },
+    {
+      title: "Hacking, Rooting, & Networking",
+      description: "Barotac Nuevo, Philippines",
+      year: "2017",
+    },
+    {
+      title: "Photo and Video Editing",
+      description: "Barotac Nuevo, Philippines",
+      year: "2018",
+    },
+    {
+      title: "Sports Sticker Business",
+      description: "Negative Space, Barotac Nuevo, Philippines",
+      year: "2020",
+    },
+    {
+      title: "Founder & Owner",
+      description: "Splitscale, Iloilo, Philippines",
+      year: "2022",
+    },
+    {
+      title: "Software Engineer",
+      description: "UniHub, Iloilo, Philippines",
+      year: "2022",
+    },
+    {
+      title: "Project Associate Software Engineer",
+      description: "Prometheus, Iloilo, Philippines",
+      year: "2023",
+    },
+    {
+      title: "Co-founder & CTO",
+      description: "Localize, Iloilo, Philippines",
+      year: "2024",
+    },
+  ];
+
+  const projects = [
+    {
+      title: "Ottie",
+      description: "A rock collecting app",
+      url: "https://ottie.splitscale.ph",
+    },
+    {
+      title: "Landil",
+      description: "A premium real estate market place",
+      url: "https://splitscale.com",
+    },
+    {
+      title: "Localize",
+      description: "in-transit digital advertising platform.",
+      url: "https://localize-landing.vercel.app",
+    },
+  ];
+
+  const certifications = [
+    {
+      title: "TOPCIT Software Development Certification",
+      url: "https://www.linkedin.com/posts/jeromecabugwason_topcit-ict-softwaredevelopment-share-7456316406104711168-24Ws",
+    },
+  ];
+
+  const testimonials: TestimonialItem[] = [
+    {
+      name: "Renz Villanueva",
+      role: "Project Manager",
+      company: "Prometheus",
+      content: "Jerome consistently delivered beyond expectations. His ability to translate complex requirements into clean, working software made every sprint smoother than the last.",
+    },
+    {
+      name: "Miguel Santos",
+      role: "Co-founder",
+      company: "Localize",
+      content: "As our CTO, Jerome architected our entire platform from the ground up. His technical decisions were sound, pragmatic, and always had the product's growth in mind.",
+    },
+    {
+      name: "Carla Reyes",
+      role: "CEO",
+      company: "UniHub",
+      content: "Jerome is the kind of engineer who takes ownership. He didn't just write code — he understood the business, asked the right questions, and shipped things that actually mattered.",
+    },
+    {
+      name: "Paolo Mendoza",
+      role: "Lead Developer",
+      company: "Splitscale",
+      content: "Working with Jerome on real-time systems was a great experience. He has a sharp eye for performance and a natural instinct for building things that scale.",
+    },
+  ];
+
+
+  return (
+    <MaxWidthWrapper className="py-8 flex flex-col gap-4">
+      <ProfileCard
+        avatar="/avatar.png"
+        name="Jerome Cabugwason"
+        verified
+        location="Iloilo city, Philippines"
+        tags={["AI", "Software Engineer", "Business", "Marketing"]}
+        badge={[{ title: "DTI Moonshot TNK 2023 Best in pitch", href: "https://cpu.edu.ph/news/cpus-team-ridesafe-receives-award-in-dtis-moonshot-tnk-pitching-competition/" }]}
+        actions={
+          <>
+            <Button size="sm" className="gap-2 rounded-lg">
+              <CalendarDays className="size-4" />
+              Schedule a call
+            </Button>
+            <Button size="sm" variant="outline" className="gap-2 rounded-lg">
+              <Mail className="size-4" />
+              Send email
+            </Button>
+          </>
+        }
+        modeToggle={<ModeToggle />}
+      />
+
+      <div
+        className="grid gap-4 grid-cols-[1fr_288px] grid-rows-[auto_auto_auto_auto]"
+        style={{
+          gridTemplateAreas: `
+            "about    timeline"
+            "stack    timeline"
+            "projects timeline"
+            "gallery  testimonials"
+          `,
+        }}
+      >
+        <AboutCard content={about} className="[grid-area:about]" />
+        <TechStackCard data={techStack} className="[grid-area:stack]" />
+        <RecentProjectsCard data={projects} className="[grid-area:projects]" />
+
+        <div className="[grid-area:timeline] flex flex-col gap-4 min-h-0">
+          <OSSBadge className="w-full" />
+          <Certificates certifications={certifications} />
+          <ExperienceTimeline timeline={timeline} className="flex-1 min-h-0" />
+        </div>
+
+        <div className="[grid-area:gallery] bg-background rounded-[32px] border p-4 min-h-48 flex items-center justify-center text-sm text-muted-foreground">
+          gallery & services
+        </div>
+
+        <Testimonials testimonials={testimonials} className="[grid-area:testimonials]" />
+      </div>
+    </MaxWidthWrapper>
+  );
+}

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 interface TechStackCategory {
@@ -6,11 +7,12 @@ interface TechStackCategory {
 }
 interface TechStackCardProps {
   data: TechStackCategory[];
+  className?: string;
 }
 
-export function TechStackCard({ data }: TechStackCardProps) {
+export function TechStackCard({ data, className }: TechStackCardProps) {
   return (
-    <div className="w-full p-4 bg-background rounded-[32px] border flex flex-col justify-start items-start gap-4 overflow-hidden">
+    <div className={cn("w-full p-4 bg-background rounded-[32px] border flex flex-col justify-start items-start gap-4 overflow-hidden", className)}>
       <h3 className="scroll-m-20 text-lg font-semibold tracking-tight">Tech Stack</h3>
       <div className="flex flex-col gap-4">
         {data.map(({ category, values }) => (

@@ -11,6 +11,7 @@ import { RecentProjectsCard } from "@/components/recent-projects-card";
 import { Certificates } from "@/components/certificates";
 import { TestimonialItem, Testimonials } from "@/components/testimonial";
 import ExperienceTimeline from "@/components/timeline";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Home() {
   const about = `
@@ -44,7 +45,7 @@ export default function Home() {
 
   const timeline: TimelineEntry[] = [
     {
-      title: "GTA S.A. Mods, Batch Scripts",
+      title: "My first matrix batch script",
       description: "Barotac Nuevo, Philippines",
       year: "2012",
     },
@@ -162,33 +163,30 @@ export default function Home() {
         modeToggle={<ModeToggle />}
       />
 
-      <div
-        className="grid gap-4 grid-cols-[1fr_288px] grid-rows-[auto_auto_auto_auto]"
-        style={{
-          gridTemplateAreas: `
-            "about    timeline"
-            "stack    timeline"
-            "projects timeline"
-            "gallery  testimonials"
-          `,
-        }}
-      >
-        <AboutCard content={about} className="[grid-area:about]" />
-        <TechStackCard data={techStack} className="[grid-area:stack]" />
-        <RecentProjectsCard data={projects} className="[grid-area:projects]" />
+      {/* Body */}
+      <div className="grid grid-cols-6 gap-4">
+        {/* Left column */}
+        <div className="grid grid-rows-3 grid-cols-1 col-span-4 gap-4">
+          <AboutCard content={about} />
+          <TechStackCard data={techStack} />
+          <RecentProjectsCard data={projects} />
+        </div>
 
-        <div className="[grid-area:timeline] flex flex-col gap-4 min-h-0">
+        {/* Right column */}
+        <div className="grid col-span-2 gap-4">
           <OSSBadge className="w-full" />
           <Certificates certifications={certifications} />
-          <ExperienceTimeline timeline={timeline} className="flex-1 min-h-0" />
+          <ExperienceTimeline timeline={timeline} />
         </div>
+      </div>
 
-        <div className="[grid-area:gallery] bg-background rounded-[32px] border p-4 min-h-48 flex items-center justify-center text-sm text-muted-foreground">
+      {/* Footer */}
+      <div className="flex gap-4">
+        <div className="flex-1 p-4 bg-background rounded-[32px] border flex items-center justify-center min-h-48 text-sm text-muted-foreground">
           gallery & services
         </div>
-
-        <Testimonials testimonials={testimonials} className="[grid-area:testimonials]" />
+        <Testimonials testimonials={testimonials} className="w-72" />
       </div>
     </MaxWidthWrapper>
-  );
+  )
 }
