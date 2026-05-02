@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { TechStackCard } from "@/components/tech-stack-card";
 import { AboutCard } from "@/components/about-card";
 import Timeline, { TimelineEntry } from "@/components/timeline";
+import { RecentProjectsCard } from "@/components/recent-projects-card";
 
 export default function Home() {
   const about = `
@@ -82,6 +83,24 @@ export default function Home() {
     },
   ];
 
+  const projects = [
+    {
+      title: "Ottie",
+      description: "A rock collecting app",
+      url: "https://ottie.splitscale.ph",
+    },
+    {
+      title: "Landil",
+      description: "A premium real estate market place",
+      url: "https://splitscale.com",
+    },
+    {
+      title: "Localize",
+      description: "in-transit digital advertising platform.",
+      url: "https://localize-landing.vercel.app",
+    },
+  ];
+
   return (
     <MaxWidthWrapper className="py-8 flex flex-col gap-4">
       <section>
@@ -115,6 +134,7 @@ export default function Home() {
         <div className="flex flex-col gap-4 w-full">
           <AboutCard content={about} />
           <TechStackCard data={techStack} />
+          <RecentProjectsCard data={projects} />
         </div>
         <div className="flex flex-col gap-4 w-fit">
           <OSSBadge />
