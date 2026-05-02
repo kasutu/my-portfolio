@@ -99,7 +99,7 @@ const OSSCard = ({
   return (
     <div
       ref={wrapRef}
-      className="relative w-fit h-fit"
+      className={cn("relative w-[260px] aspect-260/346", className)}
       style={{ perspective: "1400px" }}
     >
       <div
@@ -108,13 +108,9 @@ const OSSCard = ({
         tabIndex={0}
         onClick={handleCardClick}
         onKeyDown={(e) => e.key === "Enter" && handleCardClick()}
-        className={cn(
-          "relative w-[260px] aspect-260/346 cursor-pointer overflow-hidden rounded-2xl focus:outline-none",
-          className
-        )}
+        className="relative w-full h-full cursor-pointer overflow-hidden rounded-2xl focus:outline-none"
         style={{
-          boxShadow:
-            "0 24px 60px -12px rgba(0,0,0,0.85), 0 12px 30px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,215,140,0.08), inset 0 -1px 0 rgba(0,0,0,0.6)",
+          boxShadow: "...",
         }}
       >
         {/* PVC layers */}
@@ -225,7 +221,7 @@ const OSSCard = ({
             <div className="flex items-center gap-1.5 rounded-full border border-amber-300/25 bg-amber-300/5 px-2 py-0.5">
               <GitMerge className="h-3 w-3 text-amber-300" />
               <span className="text-[9px] font-semibold uppercase tracking-wider text-amber-200/90">
-                {mergedOn}
+                merged
               </span>
             </div>
           </div>
