@@ -66,13 +66,13 @@ const ProfileCard = ({
           height={160}
           src={avatar}
           alt={name}
-          className="size-40 rounded-2xl object-cover shrink-0"
+          className="size-20 sm:size-28 lg:size-40 rounded-2xl object-cover shrink-0"
         />
 
         <div className="flex-1 self-stretch flex flex-col justify-between items-start min-w-0">
           <div className="self-stretch flex flex-col justify-start items-start gap-2 w-full">
 
-            <div className="self-stretch flex justify-between items-center gap-2 w-full">
+            <div className="self-stretch flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 w-full">
               <div className="flex justify-start items-center gap-2 min-w-0">
                 <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight truncate">
                   {name}
@@ -138,7 +138,7 @@ const ProfileCard = ({
           </div>
 
           <div className="self-stretch flex justify-between items-center mt-2">
-            <div className="flex justify-start items-center gap-2">
+            <div className="flex flex-wrap justify-start items-center gap-2">
               {actions}
             </div>
             {modeToggle}

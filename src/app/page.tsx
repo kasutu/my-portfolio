@@ -181,17 +181,17 @@ export default function Home() {
       />
 
       {/* Body */}
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
         {/* Left column */}
-        <div className="grid grid-rows-3 grid-cols-1 col-span-4 gap-4">
+        <div className="grid grid-cols-1 lg:col-span-4 gap-4">
           <AboutCard content={about} />
           <TechStackCard data={techStack} />
           <RecentProjectsCard data={projects} />
         </div>
 
         {/* Right column */}
-        <div className="grid col-span-2 gap-4">
-          <OSSBadge className="w-full" />
+        <div className="grid lg:col-span-2 gap-4">
+          <OSSBadge />
           <Certificates certifications={certifications} />
           <ExperienceTimeline timeline={timeline} />
         </div>

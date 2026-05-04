@@ -17,7 +17,7 @@ export function RecentProjectsCard({ data, className }: { data: Project[]; class
   return (
     <div className={cn("w-full p-4 bg-background rounded-[32px] border flex flex-col justify-start items-start gap-4 overflow-hidden", className)}>
       <h3 className="scroll-m-20 text-lg font-semibold tracking-tight">Recent Projects</h3>
-      <div className="grid grid-cols-2 gap-2 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
         {data.map(({ title, description, url }) => (
           <Item key={title} variant="outline" asChild>
             <a href={url} target="_blank" rel="noopener noreferrer">

@@ -99,7 +99,7 @@ const OSSCard = ({
   return (
     <div
       ref={wrapRef}
-      className={cn("relative w-[260px] aspect-260/346", className)}
+      className={cn("relative w-full max-w-[260px] mx-auto aspect-260/346", className)}
       style={{ perspective: "1400px" }}
     >
       <div
