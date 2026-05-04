@@ -199,9 +199,9 @@ export default function Home() {
 
       {/* Footer */}
       <div className="flex gap-4">
-        <div className="flex-1 p-4 bg-background rounded-[32px] border flex items-center justify-center min-h-48 text-sm text-muted-foreground">
+        {/* <div className="flex-1 p-4 bg-background rounded-[32px] border flex items-center justify-center min-h-48 text-sm text-muted-foreground">
           gallery & services
-        </div>
+        </div> */}
         <Testimonials testimonials={testimonials} className="w-72" />
       </div>
     </MaxWidthWrapper>
