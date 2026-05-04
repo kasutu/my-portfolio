@@ -202,7 +202,7 @@ export default function Home() {
         {/* <div className="flex-1 p-4 bg-background rounded-[32px] border flex items-center justify-center min-h-48 text-sm text-muted-foreground">
           gallery & services
         </div> */}
-        <Testimonials testimonials={testimonials} className="w-72" />
+        <Testimonials testimonials={testimonials} className="w-full" />
       </div>
     </MaxWidthWrapper>
   )
