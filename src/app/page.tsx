@@ -113,28 +113,40 @@ export default function Home() {
 
   const testimonials: TestimonialItem[] = [
     {
-      name: "Renz Villanueva",
-      role: "Project Manager",
-      company: "Prometheus",
-      content: "Jerome consistently delivered beyond expectations. His ability to translate complex requirements into clean, working software made every sprint smoother than the last.",
+      name: "Justine Santos",
+      role: "Software Engineer",
+      company: "Bloom",
+      content: "From what I've seen working with Jerome at Prometheus brings a really solid mix of technical skill and genuine team-player energy. I remember him suggesting CLX to me and tailwind merge for a much more cleaner structure / implementation frontend wise., while keeping things witty between us HAHAHA. That's honestly rare.",
     },
     {
-      name: "Miguel Santos",
+      name: "Cedrick Sabrine",
+      role: "COO",
+      company: "VIP Scale",
+      content: "When it comes to the technical side of things, Jerome is definitely a CTO material. Jerome is a trusted partner who can take full ownership of the tech, once it's in his hands, we know it's completely taken care of.",
+    },
+    {
+      name: "Angelo Kaufmann",
+      role: "Solutions Architect",
+      company: "GCash",
+      content: "In a sea of students, Jerome stands out as a true learner. He possesses that rare, interest-driven curiosity that compels him to go down the 'rabbit hole' of a complex subject until he has mastered it. He has a distinct 'spiky profile' possessing a deep, specialized intelligence that allows him to operate as a high-level expert in his chosen field. He doesn't just study; he runs with his interests until they become core competencies.",
+    },
+    {
+      name: "Joel Bagoyo",
+      role: "Quality Assurance",
+      company: "Freelance",
+      content: "Jerome gave his all during the time he worked as UI/UX designer. He was super keen into details and made sure we kept revising the work until we got it perfect. Looking forward to work with him again in the future!",
+    },
+    {
+      name: "Paul Ian Capanas",
       role: "Co-founder",
-      company: "Localize",
-      content: "As our CTO, Jerome architected our entire platform from the ground up. His technical decisions were sound, pragmatic, and always had the product's growth in mind.",
+      company: "Wisdomous Solution Inc.",
+      content: "Jerome possesses a remarkable ability to bridge technical execution with tangible business value. Rather than simply writing code, he focuses on solving real-world problems through profitable, high-impact projects. His unique 'startup-minded' perspective ensures that his work as a developer is always strategically aligned with measurable success and long-term growth.",
     },
     {
-      name: "Carla Reyes",
-      role: "CEO",
-      company: "UniHub",
-      content: "Jerome is the kind of engineer who takes ownership. He didn't just write code — he understood the business, asked the right questions, and shipped things that actually mattered.",
-    },
-    {
-      name: "Paolo Mendoza",
-      role: "Lead Developer",
-      company: "Splitscale",
-      content: "Working with Jerome on real-time systems was a great experience. He has a sharp eye for performance and a natural instinct for building things that scale.",
+      name: "Danloyd John M. Ludas, RPh",
+      role: "Pharmacist",
+      company: "x",
+      content: "Jerome has been a great help to me, especially when I need advice on tech-related matters beyond my expertise. He’s reliable in recommending the right actions or purchases to improve my use of technology. He guides me on which computer parts to choose and what questions to ask sellers. He also presents both the best-performing options and the most cost-effective alternatives, helping me make well-informed decisions.",
     },
   ];
 
