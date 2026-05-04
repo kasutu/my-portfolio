@@ -144,8 +144,8 @@ export default function Home() {
     },
     {
       name: "Danloyd John M. Ludas, RPh",
-      role: "Pharmacist",
-      company: "x",
+      role: "Pharmacist/Manager",
+      company: "Botikang Pinot LU Branch",
       content: "Jerome has been a great help to me, especially when I need advice on tech-related matters beyond my expertise. He’s reliable in recommending the right actions or purchases to improve my use of technology. He guides me on which computer parts to choose and what questions to ask sellers. He also presents both the best-performing options and the most cost-effective alternatives, helping me make well-informed decisions.",
     },
   ];
