@@ -95,12 +95,17 @@ export default function Home() {
     {
       title: "Landil",
       description: "A premium real estate market place",
-      url: "https://splitscale.com",
+      url: "https://landil.splitscale.ph",
     },
     {
       title: "Localize",
       description: "in-transit digital advertising platform.",
       url: "https://localize-landing.vercel.app",
+    },
+    {
+      title: "Splitscale",
+      description: "A bespoke software development service provider.",
+      url: "https://splitscale.ph",
     },
   ];
 
